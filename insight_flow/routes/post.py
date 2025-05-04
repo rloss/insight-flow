@@ -36,12 +36,11 @@ def write_post():
 def post_list():
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
-    c.execute("SELECT id, title, author, tags, created_at FROM posts ORDER BY created_at DESC")
+    c.execute("SELECT id, title, content, author, tags, created_at FROM posts ORDER BY created_at DESC")
     posts = c.fetchall()
     conn.close()
-
-    # posts = [(1, "제목", "작성자", "GPT,AI", "2024-05-01T10:30:00"), ...]
     return render_template("post_list.html", posts=posts)
+
 
 @post_bp.route("/<int:post_id>")
 def post_detail(post_id):
@@ -98,3 +97,12 @@ def edit_post(post_id):
     category_options = ["기술", "경제", "트렌드", "사회", "기타"]
 
     return render_template("post_form.html", post=post_data, categories=category_options, mode="edit")
+
+@post_bp.route("/delete/<int:post_id>", methods=["POST"])
+def delete_post(post_id):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute("DELETE FROM posts WHERE id = ?", (post_id,))
+    conn.commit()
+    conn.close()
+    return redirect("/post")
