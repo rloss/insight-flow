@@ -141,7 +141,7 @@ body {
     color: #E2E8F0;
     white-space: pre-line;
   }
-  
+
   .post-header {
     display: flex;
     justify-content: space-between;
@@ -163,5 +163,14 @@ body {
   
   .write-button:hover {
     background-color: #0EA5E9;
+  }
+  
+  .card {
+    /* 기존 그대로 유지하면서 */
+    text-decoration: none;
+  }
+  
+  .card h3, .card p {
+    color: inherit;
   }
   
