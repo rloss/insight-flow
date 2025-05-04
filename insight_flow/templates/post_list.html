@@ -1,16 +1,18 @@
-<!-- post_list.html - 글 목록 -->
 {% extends "base.html" %}
 {% block title %}글 목록 - Insight Flow{% endblock %}
 
 {% block content %}
-  <h2>📚 전체 인사이트</h2>
+  <div class="post-header">
+    <h2>📚 전체 인사이트</h2>
+    <a href="/post/write" class="write-button">+ 글쓰기</a>
+  </div>
 
   <div class="slider">
     {% for post in posts %}
       <div class="card">
-        <h3>{{ post[1] }}</h3> <!-- title -->
-        <p>✍️ {{ post[2] }} | 🕒 {{ post[4][:10] }}</p> <!-- author, date -->
-        <p>🏷️ {{ post[3] }}</p> <!-- tags -->
+        <h3>{{ post[1] }}</h3>
+        <p>✍️ {{ post[2] }} | 🕒 {{ post[4][:10] }}</p>
+        <p>🏷️ {{ post[3] }}</p>
       </div>
     {% endfor %}
   </div>

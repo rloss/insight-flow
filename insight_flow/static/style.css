@@ -142,3 +142,26 @@ body {
     white-space: pre-line;
   }
   
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .write-button {
+    padding: 0.4rem 0.8rem;
+    background-color: #38BDF8;
+    color: #0F172A;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  
+  .write-button:hover {
+    background-color: #0EA5E9;
+  }
+  
