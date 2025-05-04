@@ -55,3 +55,46 @@ def post_detail(post_id):
         return "해당 글을 찾을 수 없습니다.", 404
 
     return render_template("post_detail.html", post=post)
+
+@post_bp.route("/edit/<int:post_id>", methods=["GET", "POST"])
+def edit_post(post_id):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+
+    if request.method == "POST":
+        # 수정된 데이터 저장
+        title = request.form["title"]
+        content = request.form["content"]
+        author = request.form["author"]
+        categories = ",".join(request.form.getlist("categories"))
+        tags = request.form["tags"]
+
+        c.execute("""
+            UPDATE posts
+            SET title = ?, content = ?, author = ?, categories = ?, tags = ?
+            WHERE id = ?
+        """, (title, content, author, categories, tags, post_id))
+        conn.commit()
+        conn.close()
+        return redirect(f"/post/{post_id}")
+
+    # GET: 기존 데이터 불러오기
+    c.execute("SELECT * FROM posts WHERE id = ?", (post_id,))
+    post = c.fetchone()
+    conn.close()
+
+    if not post:
+        return "글이 존재하지 않습니다.", 404
+
+    post_data = {
+        "id": post[0],
+        "title": post[1],
+        "content": post[2],
+        "author": post[3],
+        "categories": post[4].split(","),
+        "tags": post[5],
+    }
+
+    category_options = ["기술", "경제", "트렌드", "사회", "기타"]
+
+    return render_template("post_form.html", post=post_data, categories=category_options, mode="edit")

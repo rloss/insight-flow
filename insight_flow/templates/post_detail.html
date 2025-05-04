@@ -4,7 +4,10 @@
 
 {% block content %}
   <article class="post-detail">
-    <h2>{{ post[1] }}</h2> <!-- 제목 -->
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>{{ post[1] }}</h2>
+        <a href="/post/edit/{{ post[0] }}" class="write-button">✏ 수정</a>
+      </div>
     <p class="meta">
       ✍️ {{ post[3] }} | 🕒 {{ post[6][:10] }}  
       <br />
