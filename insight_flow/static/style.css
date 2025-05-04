@@ -1,7 +1,7 @@
 body {
     font-family: 'Pretendard', sans-serif;
-    background-color: #F1F5F9; /* 밝은 블루그레이 */
-    color: #1E293B; /* 진한 네이비 텍스트 */
+    background-color: #273447;  /* 기존보다 살짝 밝은 slate dark */
+    color: #E2E8F0;
     margin: 0;
   }
   
@@ -42,31 +42,30 @@ body {
   }
   
   .sidebar a:hover {
-    color: #38BDF8;
+    color: #91deff;
   }
   
   .main-content {
     padding: 2rem;
     flex-grow: 1;
-    background-color: #F8FAFC;  /* 약간 더 흰 쪽 */
-    color: #1E293B;
+    background-color: #2E3A4D;  /* 본문: 사이드바보다 살짝 밝게 */
+    color: #E2E8F0;
     overflow-y: auto;
   }
   
-
   .intro {
     margin-bottom: 2rem;
   }
   
   .intro h1 {
     font-size: 2.4rem;
-    color: #38BDF8;
+    color: #a1daff; /* 너무 튀지 않으면서 부드러운 밝은색 */
     margin-bottom: 0.5rem;
   }
   
   .description {
     font-size: 1.1rem;
-    color: #CBD5E1;
+    color: #94A3B8;  /* slate-400: 설명에 딱 적당함 */
   }
   
   .slider-section {
@@ -76,6 +75,7 @@ body {
   .slider-section h2 {
     font-size: 1.4rem;
     margin-bottom: 1rem;
+    color: #E2E8F0;
   }
   
   .slider {
@@ -87,10 +87,11 @@ body {
   
   .card {
     min-width: 250px;
-    background-color: #1E293B;
-    border: 1px solid #334155;
+    background-color: #334155;
+    border: 1px solid #475569;
     border-radius: 10px;
     padding: 1rem;
+    color: #E2E8F0;
     flex-shrink: 0;
     transition: all 0.2s ease;
   }
@@ -99,4 +100,5 @@ body {
     border-color: #38BDF8;
     transform: scale(1.02);
   }
+  
   
