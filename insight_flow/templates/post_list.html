@@ -13,15 +13,13 @@
     <a href="/post/write" class="write-button">+ 글쓰기</a>
   </div>
 
-  <div class="slider">
+  <div class="post-grid">
     {% for post in posts %}
-      <a href="/post/{{ post.id }}" class="card" style="text-decoration: none;">
+      <a href="/post/{{ post.id }}" class="card">
         <h3>{{ post.title }}</h3>
-        <p style="font-size: 0.9rem; color: #94A3B8;">
-          {{ post.content[:80] }}{% if post.content|length > 80 %}...{% endif %}
-        </p>
-        <p style="font-size: 0.85rem;">✍️ {{ post.author }} | 🕒 {{ post.created_at[:10] }}</p>
-        <p style="font-size: 0.85rem;">🏷️ {{ post.tags }}</p>
+        <p>{{ post.content[:80] }}{% if post.content|length > 80 %}...{% endif %}</p>
+        <p>✍️ {{ post.author }} | 🕒 {{ post.created_at[:10] }}</p>
+        <p>🏷️ {{ post.tags }}</p>
       </a>
     {% endfor %}
   </div>

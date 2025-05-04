@@ -97,12 +97,12 @@ body {
   /* 카드 스타일 */
   .card {
     min-width: 250px;
+    min-height: 220px;
     background-color: #FFFFFF;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
     padding: 1.2rem;
     color: #1E293B;
-    flex-shrink: 0;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     text-decoration: none;
   }
@@ -148,9 +148,16 @@ body {
   }
   
   .content-box {
+    font-size: 1rem;
     line-height: 1.6;
+    letter-spacing: -0.2px;
     color: #1E293B;
     white-space: pre-line;
+    margin-top: 1rem;
+  }
+  
+  .content-box p {
+    margin-bottom: 0.75rem;
   }
   
   /* 입력 폼 */
@@ -204,5 +211,13 @@ body {
     transform: translateX(-100%);
     position: fixed;
   }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
   
   

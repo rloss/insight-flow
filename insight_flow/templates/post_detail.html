@@ -18,7 +18,7 @@
     ✍️ {{ post.author }} | 🕒 {{ post.created_at[:10] }}<br />
     📂 카테고리:
     {% for cat in post.categories.split(",") %}
-      <a href="/filter/category/{{ cat.strip() }}" style="color: #38BDF8;">{{ cat.strip() }}</a>{% if not loop.last %}, {% endif %}
+      <a href="/filter/category/{{ cat.strip() }}" style="color: #426e81;">{{ cat.strip() }}</a>{% if not loop.last %}, {% endif %}
     {% endfor %}<br />
     🏷️ 태그: {{ post.tags }}
   </p>
