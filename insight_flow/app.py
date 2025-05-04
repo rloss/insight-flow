@@ -11,7 +11,7 @@ import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = os.urandom(24)  # CSRF/세션 보호용 키
+app.secret_key = os.environ.get("SECRET_KEY", "super-default-dev-key")  # CSRF/세션 보호용 키
 
 db.init_app(app)
 with app.app_context():
