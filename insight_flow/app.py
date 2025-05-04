@@ -1,5 +1,7 @@
 # app.py - Flask 앱 실행 진입점
 from flask import Flask
+from config import Config
+from models import db
 from routes.home import home_bp
 from routes.post import post_bp
 from routes.filter import filter_bp
@@ -8,7 +10,12 @@ from routes.community import community_bp  # 아직 미구현이지만 구조만
 import os
 
 app = Flask(__name__)
+app.config.from_object(Config)
 app.secret_key = os.urandom(24)  # CSRF/세션 보호용 키
+
+db.init_app(app)
+with app.app_context():
+    db.create_all()  # DB 초기화
 
 # 라우트 등록
 app.register_blueprint(home_bp)
