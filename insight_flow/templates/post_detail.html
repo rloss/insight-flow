@@ -1,1 +1,19 @@
 <!-- post_detail.html - 글 상세 -->
+{% extends "base.html" %}
+{% block title %}{{ post[1] }} - Insight Flow{% endblock %}
+
+{% block content %}
+  <article class="post-detail">
+    <h2>{{ post[1] }}</h2> <!-- 제목 -->
+    <p class="meta">
+      ✍️ {{ post[3] }} | 🕒 {{ post[6][:10] }}  
+      <br />
+      📂 카테고리: {{ post[4] }}  
+      <br />
+      🏷️ 태그: {{ post[5] }}
+    </p>
+    <div class="content-box">
+      <p>{{ post[2].replace('\n', '<br>')|safe }}</p>
+    </div>
+  </article>
+{% endblock %}

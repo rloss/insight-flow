@@ -124,3 +124,21 @@ body {
     background-color: #0EA5E9;
   }
   
+  .post-detail h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    color: #F8FAFC;
+  }
+  
+  .meta {
+    font-size: 0.95rem;
+    color: #94A3B8;
+    margin-bottom: 1rem;
+  }
+  
+  .content-box {
+    line-height: 1.6;
+    color: #E2E8F0;
+    white-space: pre-line;
+  }
+  
