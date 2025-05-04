@@ -6,3 +6,7 @@ home_bp = Blueprint("home", __name__)
 @home_bp.route("/")
 def home():
     return render_template("home.html")
+
+@home_bp.route("/community")
+def community():
+    return render_template("community.html")
