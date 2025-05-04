@@ -1,7 +1,24 @@
-<!-- home.html - 메인 페이지 -->
 {% extends "base.html" %}
 
+{% block title %}홈 - Insight Flow{% endblock %}
+
 {% block content %}
-  <h1 style="margin: 2rem;">🎉 Insight Flow에 오신 걸 환영합니다!</h1>
-  <p style="margin: 2rem;">여기는 인사이트를 정리하고, 흐름을 기록하는 공간입니다.</p>
+  <section class="intro">
+    <h1>Insight Flow</h1>
+    <p class="description">
+      Insight Flow는 기술, 경제, 사회 분야의 주요 정보와 트렌드를 정리하는 아카이브입니다.
+    </p>
+  </section>
+
+  <section class="slider-section">
+    <h2>추천 인사이트</h2>
+    <div class="slider">
+      <div class="card">[카드 1 Placeholder]</div>
+      <div class="card">[카드 2 Placeholder]</div>
+      <div class="card">[카드 3 Placeholder]</div>
+    </div>
+  </section>
+
+  <!-- 추후 콘텐츠 공간 비워둠 -->
+
 {% endblock %}

@@ -52,3 +52,49 @@ body {
     overflow-y: auto;
   }
   
+  .intro {
+    margin-bottom: 2rem;
+  }
+  
+  .intro h1 {
+    font-size: 2.4rem;
+    color: #38BDF8;
+    margin-bottom: 0.5rem;
+  }
+  
+  .description {
+    font-size: 1.1rem;
+    color: #CBD5E1;
+  }
+  
+  .slider-section {
+    margin-bottom: 3rem;
+  }
+  
+  .slider-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .slider {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  
+  .card {
+    min-width: 250px;
+    background-color: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 1rem;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+  
+  .card:hover {
+    border-color: #38BDF8;
+    transform: scale(1.02);
+  }
+  
