@@ -1,1 +1,28 @@
 <!-- post_form.html - 글쓰기/수정 폼 -->
+{% extends "base.html" %}
+{% block title %}글쓰기 - Insight Flow{% endblock %}
+
+{% block content %}
+  <h2>📝 인사이트 작성하기</h2>
+
+  <form method="POST" style="display: flex; flex-direction: column; gap: 1rem; max-width: 600px;">
+    <input type="text" name="title" placeholder="제목을 입력하세요" required />
+
+    <textarea name="content" rows="10" placeholder="본문을 입력하세요" required></textarea>
+
+    <input type="text" name="author" placeholder="작성자 이름 (선택 가능)" />
+
+    <div>
+      <label>카테고리 (복수 선택 가능)</label><br />
+      {% for cat in categories %}
+        <label>
+          <input type="checkbox" name="categories" value="{{ cat }}"> {{ cat }}
+        </label>
+      {% endfor %}
+    </div>
+
+    <input type="text" name="tags" placeholder="태그 입력 (쉼표로 구분)" />
+
+    <button type="submit">작성 완료</button>
+  </form>
+{% endblock %}
