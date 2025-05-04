@@ -1,11 +1,11 @@
+# routes/post.py
+
 from flask import Blueprint, render_template, request, redirect
-import sqlite3
 from datetime import datetime
-import os
+from models import db, Post
 
 post_bp = Blueprint("post", __name__, url_prefix="/post")
 
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "posts.db")
 
 @post_bp.route("/write", methods=["GET", "POST"])
 def write_post():
@@ -17,92 +17,71 @@ def write_post():
         tags = request.form["tags"]
         created_at = datetime.now().isoformat()
 
-        conn = sqlite3.connect(DB_PATH)
-        c = conn.cursor()
-        c.execute("""
-            INSERT INTO posts (title, content, author, categories, tags, created_at)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (title, content, author, categories, tags, created_at))
-        conn.commit()
-        conn.close()
+        new_post = Post(
+            title=title,
+            content=content,
+            author=author,
+            categories=categories,
+            tags=tags,
+            created_at=created_at
+        )
+        db.session.add(new_post)
+        db.session.commit()
 
         return redirect("/post")
 
-    # 카테고리 리스트 (UI에서 표시용)
     category_options = ["기술", "경제", "트렌드", "사회", "기타"]
     return render_template("post_form.html", categories=category_options)
 
+
 @post_bp.route("/")
 def post_list():
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("SELECT id, title, content, author, tags, created_at FROM posts ORDER BY created_at DESC")
-    posts = c.fetchall()
-    conn.close()
+    posts = Post.query.order_by(Post.created_at.desc()).all()
     return render_template("post_list.html", posts=posts)
 
 
 @post_bp.route("/<int:post_id>")
 def post_detail(post_id):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("SELECT * FROM posts WHERE id = ?", (post_id,))
-    post = c.fetchone()
-    conn.close()
-
+    post = Post.query.get(post_id)
     if not post:
         return "해당 글을 찾을 수 없습니다.", 404
-
     return render_template("post_detail.html", post=post)
+
 
 @post_bp.route("/edit/<int:post_id>", methods=["GET", "POST"])
 def edit_post(post_id):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-
-    if request.method == "POST":
-        # 수정된 데이터 저장
-        title = request.form["title"]
-        content = request.form["content"]
-        author = request.form["author"]
-        categories = ",".join(request.form.getlist("categories"))
-        tags = request.form["tags"]
-
-        c.execute("""
-            UPDATE posts
-            SET title = ?, content = ?, author = ?, categories = ?, tags = ?
-            WHERE id = ?
-        """, (title, content, author, categories, tags, post_id))
-        conn.commit()
-        conn.close()
-        return redirect(f"/post/{post_id}")
-
-    # GET: 기존 데이터 불러오기
-    c.execute("SELECT * FROM posts WHERE id = ?", (post_id,))
-    post = c.fetchone()
-    conn.close()
-
+    post = Post.query.get(post_id)
     if not post:
         return "글이 존재하지 않습니다.", 404
 
-    post_data = {
-        "id": post[0],
-        "title": post[1],
-        "content": post[2],
-        "author": post[3],
-        "categories": post[4].split(","),
-        "tags": post[5],
-    }
+    if request.method == "POST":
+        post.title = request.form["title"]
+        post.content = request.form["content"]
+        post.author = request.form["author"]
+        post.categories = ",".join(request.form.getlist("categories"))
+        post.tags = request.form["tags"]
+        db.session.commit()
+        return redirect(f"/post/{post_id}")
 
+    post_data = {
+        "id": post.id,
+        "title": post.title,
+        "content": post.content,
+        "author": post.author,
+        "categories": post.categories.split(",") if post.categories else [],
+        "tags": post.tags
+    }
     category_options = ["기술", "경제", "트렌드", "사회", "기타"]
 
     return render_template("post_form.html", post=post_data, categories=category_options, mode="edit")
 
+
 @post_bp.route("/delete/<int:post_id>", methods=["POST"])
 def delete_post(post_id):
-    conn = sqlite3.connect(DB_PATH)
-    c = conn.cursor()
-    c.execute("DELETE FROM posts WHERE id = ?", (post_id,))
-    conn.commit()
-    conn.close()
+    post = Post.query.get(post_id)
+    if not post:
+        return "해당 글이 존재하지 않습니다.", 404
+    db.session.delete(post)
+    db.session.commit()
     return redirect("/post")
+
