@@ -4,9 +4,18 @@
 {% block content %}
   <h2>{{ mode == "edit" and "✏ 글 수정하기" or "📝 인사이트 작성하기" }}</h2>
 
-  <form method="POST" style="display: flex; flex-direction: column; gap: 1rem; max-width: 600px;">
+  <!-- Quill CSS CDN -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+  <form method="POST" style="display: flex; flex-direction: column; gap: 1rem; max-width: 700px;">
     <input type="text" name="title" placeholder="제목" value="{{ post.title if post else '' }}" required />
-    <textarea name="content" rows="10" placeholder="본문 입력" required>{{ post.content if post else '' }}</textarea>
+
+    <!-- 에디터 영역 -->
+    <div id="editor" style="height: 300px; background: #fff;">
+      {{ post.content|safe if post else '' }}
+    </div>
+    <input type="hidden" name="content" id="hidden-content" />
+
     <input type="text" name="author" placeholder="작성자" value="{{ post.author if post else '' }}" />
 
     <div>
@@ -24,4 +33,32 @@
 
     <button type="submit">{{ mode == "edit" and "수정 완료" or "작성 완료" }}</button>
   </form>
+
+  <!-- Quill JS CDN -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+  <script>
+    const quill = new Quill('#editor', {
+      theme: 'snow',
+      placeholder: '내용을 작성해 주세요...',
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['link', 'blockquote', 'code-block'],
+          ['clean']
+        ]
+      }
+    });
+
+    // 기존 content 불러오기 (수정 시 필요)
+    const hiddenContent = document.getElementById("hidden-content");
+
+    // form submit 시 content 값 세팅
+    document.querySelector("form").addEventListener("submit", function () {
+      hiddenContent.value = quill.root.innerHTML;
+    });
+  </script>
 {% endblock %}
+
