@@ -17,10 +17,16 @@
     {% for post in posts %}
       <a href="/post/{{ post.id }}" class="card">
         <h3>{{ post.title }}</h3>
-        <p>{{ post.content[:80] }}{% if post.content|length > 80 %}...{% endif %}</p>
-        <p>✍️ {{ post.author }} | 🕒 {{ post.created_at[:10] }}</p>
-        <p>🏷️ {{ post.tags }}</p>
+
+        <!-- ✅ HTML 태그 제거 후 미리보기 표시 -->
+        <p style="font-size: 0.9rem; color: #475569;">
+          {{ post.content | striptags | truncate(80, True, '...') }}
+        </p>
+
+        <p style="font-size: 0.85rem;">✍️ {{ post.author }} | 🕒 {{ post.created_at[:10] }}</p>
+        <p style="font-size: 0.85rem;">🏷️ {{ post.tags }}</p>
       </a>
     {% endfor %}
   </div>
 {% endblock %}
+
