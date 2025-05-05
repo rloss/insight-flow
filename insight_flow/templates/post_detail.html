@@ -23,10 +23,8 @@
     🏷️ 태그: {{ post.tags }}
   </p>
 
-  <div class="content-box">
-    <p>{{ post.content.replace('\n', '<br>')|safe }}</p>
-  </div>
+  <!-- ✅ 본문 출력 -->
+  <div class="content-box">{{ post.content|safe }}</div>
 
 </article>
 {% endblock %}
-
