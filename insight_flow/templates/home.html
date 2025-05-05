@@ -16,9 +16,12 @@
       {% for post in posts %}
         <a href="/post/{{ post.id }}" class="card" style="text-decoration: none;">
           <h3>{{ post.title }}</h3>
+
+          <!-- ✅ HTML 제거 + 글자수 제한 -->
           <p style="font-size: 0.9rem; color: #94A3B8;">
-            {{ post.content[:80] }}{% if post.content|length > 80 %}...{% endif %}
+            {{ post.content | striptags | truncate(80, True, '...') }}
           </p>
+
           <p style="font-size: 0.85rem;">✍️ {{ post.author }} | 🕒 {{ post.created_at[:10] }}</p>
           <p style="font-size: 0.85rem;">🏷️ {{ post.tags }}</p>
         </a>
